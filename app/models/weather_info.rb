@@ -46,7 +46,7 @@ class WeatherInfo < ApplicationRecord
         Task.where(:due_date=>Date.today+2).left_outer_joins(:weather_info).count
     end
 
-    def self.callOpenWeather(lat,lon,)
+    def self.callOpenWeather(lat,lon)
         uri = URI.parse("https://api.openweathermap.org/data/2.5/forecast/daily?lat=#{lat}&lon=#{lon}&cnt=2&appid=f72cae3edf151c65f4b5b764a79cea3a")
         http = Net::HTTP.new(uri.host, uri.port)
         http.use_ssl = true
