@@ -18,7 +18,7 @@ class User < ApplicationRecord
     # check if user already exists in UserLocationInfo table
     if coordinates.blank?
       self.errors.add(:address, :blank, message: "Enter valid address in format City, country")
-      raise "invalid address error"
+      raise "invalid user address entered"
     end
     if UserLocationInfo.where(user_id: self.id).empty?
       UserLocationInfo.create(user_id:self.id, latitude: coordinates[0], longitude: coordinates[1])

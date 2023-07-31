@@ -95,7 +95,7 @@ describe TasksController, type: :controller do
 #           request.headers['Content-Type'] = 'application/json'
 #           request.headers['Accept'] = 'application/json'
 #           Task = Task.create(title: "task1", "body": "KT with Omid")
-#           patch :update, params: {"id": Task.id, Task:{"title": "task1","body": "KT with Omid and team"}}
+#           patch :update, params: {"id": Task.id, Task:{"title": "task1","description": "KT with Omid and team"}}
 #           expect(response.status).to eq(200)
 #           updated_Task = Task.find(Task.id)
 #           expect(updated_Task.body).to eq("KT with Omid and team")
