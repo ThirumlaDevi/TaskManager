@@ -54,7 +54,9 @@ class WeatherInfo < ApplicationRecord
         if res.code.to_i >= 400
             puts "cron job error #{res.body}"
             return nil
-        else 
-        res.body.to_json
+        end
+        res.body.to_json       
     end
 end
+
+# CURL "https://api.openweathermap.org/data/2.5/forecast/daily?lat=35&lon=50&cnt=2&appid=f72cae3edf151c65f4b5b764a79cea3a"
