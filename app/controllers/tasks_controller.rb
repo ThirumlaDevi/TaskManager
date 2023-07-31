@@ -45,6 +45,32 @@ class TasksController < ApplicationController
     end
   end
 
+  def update
+    # add authenticated user id here
+   
+    new_task_params=task_params
+    new_task_params["user_id"] = current_user_id
+    @task = Task.find_by(id: params[:id], user_id: current_user_id)
+    if @task.update(new_task_params)
+      respond_to do |format|
+        format.html {redirect_to @task}
+        format.json {render json: @task.to_json, status: :ok}
+      end
+    else
+      respond_to do |format|
+        format.html {render :new, status: :unprocessable_entity}
+        format.json {render json: {message: "you do not have access to perform this action"}, status: :unauthorized}
+      end
+    end
+  end
+
+  def destroy
+    @article = Task.find_by(id: params[:id], user_id: current_user_id)
+    @article.destroy
+
+    redirect_to tasks_path, status: :see_other
+  end
+
   private
     def task_params
       params.require(:task).permit(:title, :description, :due_date)
