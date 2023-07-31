@@ -12,9 +12,13 @@ class TasksController < ApplicationController
 
   def show
     @task = Task.find_by(id: params[:id], user_id: current_user_id)
-    respond_to do |format|
-      format.html {render 'show'}
-      format.json {render json: @task.to_json}
+    if @task.nil?
+      render json: {message: "Either task not present or you do not have access to it"}, status: :not_found
+    else
+      respond_to do |format|
+        format.html {render 'show'}
+        format.json {render json: @task.to_json}
+      end
     end
   end
 
@@ -26,8 +30,8 @@ class TasksController < ApplicationController
     # add authenticated user id here
     new_task_params=task_params
     new_task_params["user_id"] = current_user_id
+    
     @task = Task.new(new_task_params)
-
     if @task.save
       respond_to do |format|
         format.html {redirect_to @task}
@@ -60,7 +64,7 @@ class TasksController < ApplicationController
     end
     
     # def allowed_access
-    #   debugger
+    
     #   current_user
     # end
 end

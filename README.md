@@ -26,6 +26,7 @@ rake db:migrate
 ```
 
 ### How to run the test suite
+Note that before running the test for this application run the following command to setup the database environment `rake db:test:prepare`
 rspec testing suite is used to test application. The following commands are used to run all tests `rspec`
 
 to run specific tests `rspec spec/<filename>.rb:<context/test line number>`
