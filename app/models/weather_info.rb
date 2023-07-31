@@ -19,7 +19,6 @@ class WeatherInfo < ApplicationRecord
                 if user_location_info.nil?
                     puts "Cron job error user information for task not found #{res.body}"
                 else
-                    debugger
                     res = callOpenWeather(user_location_info.latitude,user_location_info.longitude)
                     if !res.nil?
                         weatherOutputs = WeatherOutput.new
@@ -46,7 +45,7 @@ class WeatherInfo < ApplicationRecord
         Task.where(:due_date=>Date.today+2).left_outer_joins(:weather_info).count
     end
 
-    def self.callOpenWeather(lat,lon,)
+    def self.callOpenWeather(lat,lon)
         uri = URI.parse("https://api.openweathermap.org/data/2.5/forecast/daily?lat=#{lat}&lon=#{lon}&cnt=2&appid=f72cae3edf151c65f4b5b764a79cea3a")
         http = Net::HTTP.new(uri.host, uri.port)
         http.use_ssl = true
@@ -54,7 +53,9 @@ class WeatherInfo < ApplicationRecord
         if res.code.to_i >= 400
             puts "cron job error #{res.body}"
             return nil
-        else 
-        res.body.to_json
+        end
+        res.body.to_json       
     end
 end
+
+# CURL "https://api.openweathermap.org/data/2.5/forecast/daily?lat=35&lon=50&cnt=2&appid=f72cae3edf151c65f4b5b764a79cea3a"
