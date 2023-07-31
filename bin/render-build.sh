@@ -6,6 +6,5 @@ bundle lock --add-platform x86_64-linux
 bundle install
 bundle exec rake assets:precompile
 bundle exec rake assets:clean
-bundle exec rake db:drop 
-bundle exec rake db:create
+bundle exec rake db:reset
 bundle exec rake db:migrate
