@@ -19,7 +19,6 @@ class WeatherInfo < ApplicationRecord
                 if user_location_info.nil?
                     puts "Cron job error user information for task not found #{res.body}"
                 else
-                    debugger
                     res = callOpenWeather(user_location_info.latitude,user_location_info.longitude)
                     if !res.nil?
                         weatherOutputs = WeatherOutput.new

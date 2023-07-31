@@ -18,8 +18,8 @@ Rails.application.routes.draw do
 
   get 'welcome/index'
   post 'welcome/index', to: 'welcome#new'
-  root "welcome#index"
-  # root "tasks#index"
+  # root "welcome#index"
+  root "tasks#index"
 
   resources :tasks
 end
