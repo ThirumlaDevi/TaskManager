@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   before_action :authenticate_user!
   def index
     # user_id need not be checked as only authenticated user is allowed to see tasks
-    @tasks = Task.where(user_id: current_user_id).all
+    @tasks = Task.where(user_id: getUserId).all
     respond_to do |format|
       format.html {render 'index'}
       # if task is nil return empty json or proper articles response
@@ -11,7 +11,7 @@ class TasksController < ApplicationController
   end
 
   def show
-    @task = Task.find_by(id: params[:id], user_id: current_user_id)
+    @task = Task.find_by(id: params[:id], user_id: getUserId)
     if @task.nil?
       render json: {message: "Either task not present or you do not have access to it"}, status: :not_found
     else
@@ -29,7 +29,8 @@ class TasksController < ApplicationController
   def create
     # add authenticated user id here
     new_task_params=task_params
-    new_task_params["user_id"] = current_user_id
+    
+    new_task_params["user_id"] = getUserId
     
     @task = Task.new(new_task_params)
     if @task.save
@@ -49,8 +50,8 @@ class TasksController < ApplicationController
     # add authenticated user id here
    
     new_task_params=task_params
-    new_task_params["user_id"] = current_user_id
-    @task = Task.find_by(id: params[:id], user_id: current_user_id)
+    new_task_params["user_id"] = getUserId
+    @task = Task.find_by(id: params[:id], user_id: getUserId)
     if @task.update(new_task_params)
       respond_to do |format|
         format.html {redirect_to @task}
@@ -65,7 +66,7 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @article = Task.find_by(id: params[:id], user_id: current_user_id)
+    @article = Task.find_by(id: params[:id], user_id: getUserId)
     @article.destroy
 
     redirect_to tasks_path, status: :see_other
@@ -85,8 +86,18 @@ class TasksController < ApplicationController
       session['current_user_id']
     end
     
-    def current_user
-      @current_user ||= User.find(current_user_id)
+    # def current_user
+    #   @current_user ||= User.find(current_user_id)
+    # end
+
+    def getUserId
+      # 
+      if current_user.nil?
+        @current_user ||= User.find(current_user_id)
+        current_user_id
+      else
+        current_user.id
+      end
     end
     
     # def allowed_access
