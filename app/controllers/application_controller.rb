@@ -1,7 +1,9 @@
 class ApplicationController < ActionController::Base
     include ActionController::MimeResponds
     
-    protect_from_forgery except: :sign_in
+    # To avoid Cross-Site Request Forgery (CSRF) 
+    protect_from_forgery unless: -> { request.format.json? }
+    # except: :sign_in
     before_action :check_for_existing_user, only: :sign_up
     before_action :check_for_existing_user, only: :sign_in
     before_action :configure_permitted_parameters, if: :devise_controller?
@@ -26,7 +28,7 @@ class ApplicationController < ActionController::Base
         tasks_path
     end
 
-    def after_sign_up_path_for(resource)
-        new_user_session_path
-    end
+    # def after_sign_up_path_for(resource)
+    #     new_user_session_path
+    # end
 end

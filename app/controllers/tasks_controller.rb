@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+  include UserConcern
   before_action :authenticate_user!
   def index
     # user_id need not be checked as only authenticated user is allowed to see tasks
@@ -77,35 +78,6 @@ class TasksController < ApplicationController
       params.require(:task).permit(:title, :description, :due_date)
       # params.require(:task).extract!(:title, :description)
     end
-
-    def authenticate_user!
-      super unless session['current_user_id'].present?
-    end
-    
-    def current_user_id
-      session['current_user_id']
-    end
-    
-    # def current_user
-    #   @current_user ||= User.find(current_user_id)
-    # end
-
-    def getUserId
-      # 
-      if current_user.nil?
-        @current_user ||= User.find(current_user_id)
-        current_user_id
-      else
-        current_user.id
-      end
-    end
-    
-    # def allowed_access
-    
-    #   current_user
-    # end
 end
-
-# <%= #current_user.email%>
   
 
