@@ -8,10 +8,16 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :jwt_authenticatable, jwt_revocation_strategy: JwtDenylist
   after_save :addLocationInfo
+  before_save :checkemail
   # after_update :addLocationInfo
   # after_create :addLocationInfo
 
   private
+
+  def checkemail
+    debugger
+  end
+  
   def addLocationInfo
     # This way even if location update happens in future location information will be automatically updated
     coordinates = Geocoder.coordinates(self.address) 

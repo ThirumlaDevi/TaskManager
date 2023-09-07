@@ -46,7 +46,7 @@ This application is accessible as both a web app and via api
 ```
 curl -X POST http://localhost:3000/api/users/sign_up -i -H "Accept: application/json" \
    -H 'Content-Type: application/json' \
-   -d '{"user" : {"email":"user3@gmail.com","password":"123456", "address": "Ireland, Dublin"}}'
+   -d '{"user" : {"email":"user31@gmail.com","password":"123456", "address": "Ireland, Dublin"}}'
 ```
 _Note:_
 - _Post sign up, login again via api to get the token from authorisation header_
@@ -56,7 +56,7 @@ _Note:_
 ```
 curl -X POST http://localhost:3000/api/users/sign_in -i -H "Accept: application/json" \
    -H 'Content-Type: application/json' \
-   -d '{"user" : {"email":"user3@gmail.com","password":"123456"}}'
+   -d '{"user" : {"email":"user41@gmail.com","password":"111111"}}'
 ```
 _Note:_
 - _The api token is set to expire after 1hr. The same is configured for useres logged in via web_
@@ -72,10 +72,13 @@ _Note: Once signed out the api token becomes invalid for login_
 
 #### CREATE TASK
 
+```
 curl -X POST http://localhost:3000/tasks -i -H "Accept: application/json" \
    -H 'Content-Type: application/json' \
-   -d '{"task" : {"title":"task1","description":"task1 body"}}' \
-   -H "Authorization: Bearer <TOKEN>"
+   -d '{"task" : {"title":"task2","description":"task2 body"}}' \
+   -H "Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzMCIsInNjcCI6InVzZXIiLCJhdWQiOm51bGwsImlhdCI6MTY5MjYyNjE0NywiZXhwIjoxNjkyNjI5NzQ3LCJqdGkiOiJkMjY2OThlYi04MzY4LTQ5NzQtOWFiZS0yZTE3YjZlMTg1OTQifQ.fbpotssTvl7_GPYwOh3l1q24LwBDE68bJgzGNxPhIzc"
+```
+
 
 #### GET ALL TASKS
 ```
