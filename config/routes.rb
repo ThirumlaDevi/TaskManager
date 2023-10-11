@@ -7,7 +7,8 @@ Rails.application.routes.draw do
                       class_name: 'User',
                       controllers: {
                         sessions: 'api/sessions',
-                        registrations: 'api/registrations'}
+                        registrations: 'api/registrations'
+                      }
     devise_scope :user do
       post '/users/sign_in' => 'sessions#create'
       get '/users/sign_in' => 'devise/sessions#new'
@@ -19,7 +20,7 @@ Rails.application.routes.draw do
   # get 'welcome/index'
   # post 'welcome/index', to: 'welcome#new'
   # root "welcome#index"
-  root "tasks#index"
+  root 'tasks#index'
 
   resources :tasks
 end

@@ -7,29 +7,29 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :jwt_authenticatable, jwt_revocation_strategy: JwtDenylist
-  after_save :addLocationInfo
-  before_save :checkemail
-  # after_update :addLocationInfo
-  # after_create :addLocationInfo
+  after_save :add_location_info
+  # before_save :checkemail
+  # after_update :add_location_info
+  # after_create :add_location_info
 
   private
 
-  def checkemail
-    debugger
-  end
-  
-  def addLocationInfo
+  # def checkemail
+  #   debugger
+  # end
+
+  def add_location_info
     # This way even if location update happens in future location information will be automatically updated
-    coordinates = Geocoder.coordinates(self.address) 
+    coordinates = Geocoder.coordinates(self.address)
     # check if user already exists in UserLocationInfo table
     if coordinates.blank?
-      self.errors.add(:address, :blank, message: "Enter valid address in format City, country")
-      raise "invalid user address entered"
+      self.errors.add(:address, :blank, message: 'Enter valid address in format City, country')
+      raise 'invalid user address entered'
     end
     if UserLocationInfo.where(user_id: self.id).empty?
-      UserLocationInfo.create(user_id:self.id, latitude: coordinates[0], longitude: coordinates[1])
+      UserLocationInfo.create(user_id: self.id, latitude: coordinates[0], longitude: coordinates[1])
     else
-      UserLocationInfo.update(user_id:self.id, latitude: coordinates[0], longitude: coordinates[1])
+      UserLocationInfo.update(user_id: self.id, latitude: coordinates[0], longitude: coordinates[1])
     end
   end
 end

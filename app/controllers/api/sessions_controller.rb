@@ -22,11 +22,11 @@ class Api::SessionsController < Devise::SessionsController
   end
 
   def log_out_success
-    render json: { message: "You are logged out." }, status: :ok
+    render json: { message: 'You are logged out.' }, status: :ok
   end
 
   def log_out_failure
-    render json: { errors: [{ message: "log out failed."}]}, status: :unauthorized
+    render json: { errors: [{ message: 'log out failed.'}]}, status: :unauthorized
   end
 end
 

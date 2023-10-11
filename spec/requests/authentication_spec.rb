@@ -1,5 +1,5 @@
-ENV["RAILS_ENV"] ||= 'test'
-require File.expand_path("../../../config/environment", __FILE__)
+ENV['RAILS_ENV'] ||= 'test'
+require File.expand_path('../../../config/environment', __FILE__)
 require 'rspec/rails'
 
 # RSpec.describe "Tasks", type: :request do

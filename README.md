@@ -101,4 +101,17 @@ curl http://localhost:3000/tasks/<id> -H "Accept: application/json" \
 - convert date to epoc seconds and save and view versa to show
 - Check cron job once api is active
 - Error handling when userLocationinfo doesn't get added post user save properly
-- write tests
+- write more tests
+
+### Ruby coding standards followed
+- Use %i or %I for an array of symbols
+- Single quoted strings when there in no string interpolation involved
+- Use snakecase for method and variable names
+- Use inbuilt ruby method instead of repeating the checks manually
+- Use 2 space indentation instead of 4
+- space missing around symbols like {, }, =, etc
+- redundant return statements
+- Removing trailing whitespaces
+- Condition size for method too high
+- Refactor to the new Ruby 1.9 hash syntax
+- Value omission in hash literals

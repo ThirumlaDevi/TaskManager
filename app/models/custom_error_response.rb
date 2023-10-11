@@ -1,13 +1,13 @@
 class CustomErrorResponse
-    def ErrorResponse
+  def error_response
+    {
+      errors: [
         {
-            errors: [
-                {
-                    id: :unauthorized,
-                    status: 401,
-                    title: i18n_message
-                }
-            ]
-        }.to_json
-    end
+          id: :unauthorized,
+          status: 401,
+          title: i18n_message
+        }
+      ]
+    }.to_json
   end
+end

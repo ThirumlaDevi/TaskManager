@@ -14,19 +14,20 @@ class WelcomeController < ApplicationController
   #   # make_request
   # end
 
-  def new
-    user_type = params[:user_type]
-    api_token = params[:api_token]
-  end
+  # def new
+  #   params[:user_type]
+  #   params[:api_token]
+  # end
 
   protected
+
   def make_request
     token = '**************'
     url = 'http://localhost:3000/articles'
     uri = URI(url)
     request = Net::HTTP::Get.new(uri)
     request['token'] = token
-    response = Net::HTTP.start(uri.hostname, uri.port) do |http|
+    Net::HTTP.start(uri.hostname, uri.port) do |http|
       http.request(request)
     end
   end
