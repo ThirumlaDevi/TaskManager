@@ -1,6 +1,11 @@
 <h1>Hello <%= current_user.email%> </h1>
 <h2>Task list</h2>
 
+<head>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+</head>
+
 <% if !@tasks.nil? %>
   <ul>
     <% @tasks.each do |task| %>

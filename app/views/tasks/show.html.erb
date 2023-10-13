@@ -1,4 +1,8 @@
 <h1><%= @task.title %></h1>
+<head>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+</head>
 <p>task description : <%= @task.description %></p>
 <p>due date : <%= @task.due_date %></p>
 <ul>

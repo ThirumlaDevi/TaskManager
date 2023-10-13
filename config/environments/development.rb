@@ -59,6 +59,9 @@ Rails.application.configure do
   # Suppress logger output for asset requests.
   config.assets.quiet = true
 
+  # enforcing ssl
+  # config.force_ssl = true
+
   # devise config 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   # Raises error for missing translations.

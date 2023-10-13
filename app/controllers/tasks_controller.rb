@@ -3,7 +3,7 @@ class TasksController < ApplicationController
   before_action :authenticate_user!
   def index
     # user_id need not be checked as only authenticated user is allowed to see tasks
-    @tasks = Task.where(user_id: getUserId).all
+    @tasks = @current_user.tasks.where(user_id: getUserId).all
     respond_to do |format|
       format.html { render 'index' }
       # if task is nil return empty json or proper articles response
@@ -12,7 +12,7 @@ class TasksController < ApplicationController
   end
 
   def show
-    @task = Task.find_by(id: params[:id], user_id: getUserId)
+    @task = @current_user.tasks.find_by(id: params[:id], user_id: getUserId)
     if @task.nil?
       render json: { message: 'Either task not present or you do not have access to it' }, status: :not_found
     else
@@ -31,7 +31,7 @@ class TasksController < ApplicationController
     # add authenticated user id here
     new_task_params = task_params
     new_task_params['user_id'] = getUserId
-    @task = Task.new(new_task_params)
+    @task = @current_user.tasks.new(new_task_params)
     if @task.save
       respond_to do |format|
         format.html { redirect_to @task }
@@ -49,7 +49,7 @@ class TasksController < ApplicationController
     # add authenticated user id here
     new_task_params = task_params
     new_task_params['user_id'] = getUserId
-    @task = Task.find_by(id: params[:id], user_id: getUserId)
+    @task = @current_user.tasks.find_by(id: params[:id], user_id: getUserId)
     if @task.update(new_task_params)
       respond_to do |format|
         format.html { redirect_to @task }
@@ -64,7 +64,7 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @article = Task.find_by(id: params[:id], user_id: getUserId)
+    @article = @current_user.tasks.find_by(id: params[:id], user_id: getUserId)
     @article.destroy
 
     redirect_to tasks_path, status: :see_other

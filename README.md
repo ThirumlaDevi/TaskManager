@@ -115,3 +115,27 @@ curl http://localhost:3000/tasks/<id> -H "Accept: application/json" \
 - Condition size for method too high
 - Refactor to the new Ruby 1.9 hash syntax
 - Value omission in hash literals
+
+### Security ensured
+- Sensitive information is not stored in sessions
+  - Only user id is part of session
+  - Todo: ssl integration to not allow session hijacking in general
+- User sessions are not stored in cookies
+  - Cookie hash stored in client end could be used for malicious activity if rails app secret key (secret_key_base) is not secured enough
+- Set session expiry in devise settings to avoid session fixation
+  - session fixation is when hackers lure other users to use their active session id for login/registration operations and co-use session ids
+- Auth token expiry and session expiry is set in server side. Since it's not part of session hackers can't modify expiry value if it's part of the session
+- Sign out user when a CSRF token is not present when hitting from some script and not as json requests
+  -  when a CSRF token is not present or is incorrect on a non-GET request then signout user (user id taken from session)
+  - Todo : Still if user id is set in the session with same session id, the impersonation as user on GET operations can still happen until expiry or victim user signs out (AKS, CSRF attack). 
+- Including only expected parameters to be accepted for the endpoints, even within the body. 
+  - Todo: restrict accepting certain query parameters depending on the url
+- Redirect all unknown path calls from route to "list tasks path", this doesn't allow hackers to lure customers to page outside of the application
+  - Todo: Another way is we can something similar to what linkedin does when we try to hit links outside of the application it notifies the user, "this way user knows that they are under attack" and can mitigate out of the situation
+- Checks if tokens generated are getting filtered out form getting printed in the logs using the 'config.filter_parameters' configuration
+- Todo: Ensure to include only allowed tags in web application and sanitize even inputs to task endpoints
+Reference -> https://guides.rubyonrails.org/security.html#html-javascript-injection-countermeasures
+- Todo: Check webmail interface worm like Nduja, Yahoo mail worm, samy worm, etc to understand encoding injection better and how to avoid it
+  - Check what all are handled by rails sanitize
+- Todo: Understand [this](https://guides.rubyonrails.org/security.html#ajax-injection), have no idea what they are talking about
+- Allow only authorization key to be exposed in the header

@@ -3,6 +3,10 @@ class ApplicationController < ActionController::Base
 
   # To avoid Cross-Site Request Forgery (CSRF)
   protect_from_forgery unless: -> { request.format.json? }
+  # this is called when a CSRF token is not present or is incorrect on a non-GET request.
+  rescue_from ActionController::InvalidAuthenticityToken do |exception|
+    sign_out_user # Example method that will destroy the user cookies
+  end
   # except: :sign_in
   before_action :check_for_existing_user, only: :sign_up
   before_action :check_for_existing_user, only: :sign_in
